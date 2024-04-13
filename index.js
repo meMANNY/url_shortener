@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const urlRoute = require("./routes/url");
 const app = express();
 const Url = require('./models/url');
@@ -8,6 +9,8 @@ const PORT = 8001;
 
 connectdb('mongodb://localhost:27017/url-shortener');
 
+app.set("view engine", "ejs"); 
+app.set("views", path.resolve("./views"));
 app.use(express.json());
 app.use("/url", urlRoute);
 
