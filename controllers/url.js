@@ -8,8 +8,8 @@ async function handleGenerateShortUrl(req,res){
         redirectUrl: body.url,
         visitHistory: []
     });
-return res.json({id: shortId});
 
+return res.render("home", {id: shortId}); // Return the shortId to the user on the frontend
 }
 async function handleGetanalytics(req,res){
     const shortId = req.params.shortId;

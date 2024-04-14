@@ -6,6 +6,42 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>hey from server</h1>
+    <h1>Url shortener</h1>
+    <% if(locals.id){ %>
+        <p> Your short url is: http://localhost:8001/url/<% = id %> </p>
+
+    <%} %>
+
+    <div>
+        <form method="post" action="/url">
+            <label> Enter your original url</label>
+            <input type="text" placeholder="https://example.com" name = "redirectUrl" />
+            <button type="submit"> Generate</button>
+        </form>
+    </div>
+    <div>
+        <% if (local.url) { %>
+        <table>
+            <thead>
+                <th>S.No</th>
+                <th>shortId</th>
+                <th>redirectUrl</th>
+                <th>clicks</th>
+            </thead>
+            <tbody>
+                <% url.forEach((urls,index) => { %>
+                <tr>
+                    <td><%= index+1 %></td>
+                <td><%= urls.shortId %></td>
+                <td><%= urls.redirectUrl %></td>
+                <td><%= urls.visitedHistory.length %></td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+        <% } %>
+    </div>
+
 </body>
 </html>
+
