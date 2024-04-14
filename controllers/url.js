@@ -6,7 +6,8 @@ async function handleGenerateShortUrl(req,res){
     const shortId = nanoid(8);
     await Url.create({shortId: shortId, 
         redirectUrl: body.url,
-        visitHistory: []
+        visitHistory: [],
+        createdBy: req.user._id
     });
 
 return res.render("home", {id: shortId}); // Return the shortId to the user on the frontend

@@ -4,7 +4,9 @@ const urlRoute = require("./routes/url");
 const app = express();
 const Url = require('./models/url');
 const {connectdb} = require('./connection');
+const {restrictToUserOnly,checkAuth} = require('./middleware/auth');
 const route = require("./routes/staticRouter");
+const cookieParser = require("cookie-parser");
 
 const userRoute = require("./routes/user");
 
@@ -15,12 +17,13 @@ connectdb('mongodb://localhost:27017/url-shortener');
 app.set("view engine", "ejs"); 
 app.set("views", path.resolve("./views"));
 app.use(express.json());
-
+app.use(cookieParser());
 app.use(express.urlencoded({extended: false}));
-app.use("/url", urlRoute);
-app.use("/user", userRoute);
+app.use("/url", restrictToUserOnly, urlRoute);
+app.use("/user",userRoute);
 
-app.use("/", route);
+
+app.use("/",checkAuth, route);
 
 app.get("/test", async (req, res) => {
     const allUrls = await Url.find();
