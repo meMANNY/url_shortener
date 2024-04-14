@@ -6,6 +6,8 @@ const Url = require('./models/url');
 const {connectdb} = require('./connection');
 const route = require("./routes/staticRouter");
 
+const userRoute = require("./routes/user");
+
 const PORT = 8001;
 
 connectdb('mongodb://localhost:27017/url-shortener');
@@ -16,6 +18,7 @@ app.use(express.json());
 
 app.use(express.urlencoded({extended: false}));
 app.use("/url", urlRoute);
+app.use("/user", userRoute);
 
 app.use("/", route);
 
